@@ -14,18 +14,18 @@ export const ADD_SMURF_FAILURE = "ADD_SMURF_FAILURE";
 */
 export const getSmurfs = () => dispatch => {
   dispatch({ type: FETCH_SMURFS_START });
-  axios.get("http://localhost:3333/smurfs").then(res => {
-    console.log(res);
-    dispatch({
-      type: FETCH_SMURFS_SUCCESS,
-      payload: res.data
-    }).catch(err =>
+  return axios
+    .get("http://localhost:3333/smurfs")
+    .then(res => {
+      console.log(res);
       dispatch({
-        type: FETCH_SMURFS_FAILURE,
-        payload: err
-      })
-    );
-  });
+        type: FETCH_SMURFS_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({ type: FETCH_SMURFS_FAILURE, payload: err });
+    });
 };
 
 export const addSmurf = smurf => dispatch => {
