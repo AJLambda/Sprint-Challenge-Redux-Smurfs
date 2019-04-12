@@ -23,8 +23,20 @@ In this challenge, you are to build the Smurfs village once again, only this tim
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 - [ ] In your own words, describe `actions`, `reducers` and the `store` and their role in Redux. What does each piece do? Why is the store known as a 'single source of truth' in a redux application?
-- [ ] What is the difference between Application state and Component state? When would be a good time to use one over the other?
-- [ ] Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
+
+  action - The only way to change the state is to emit an action, an object describing what happened.
+
+  reducer - To specify how the state tree is transformed by actions, you create reducers. Reducers are just pure functions that take the previous state and an action, and return the next state.
+
+  store - The state of your whole application is stored in an object tree within a single store. A store is an object that holds the application's state tree.
+
+* [ ] What is the difference between Application state and Component state? When would be a good time to use one over the other?
+
+  Your application state is global, and your component state is local. Application state is good to use if you want to change the state of the entire application. Component state can can only be updated within that component and passed down to its children via props.
+
+* [ ] Describe `redux-thunk`, what does it allow us to do? How does it change our `action-creators`?
+
+  Redux Thunk is a middleware that lets you call action creators that return a function instead of an action object. It handles the asynchronous actions in Redux.
 
 ## Project Set Up
 
@@ -80,9 +92,9 @@ return dispatch => {
 ```js
 [
   {
-    name: 'Brainey',
+    name: "Brainey",
     age: 200,
-    height: '5cm',
+    height: "5cm",
     id: 0
   }
 ];
@@ -113,15 +125,15 @@ Example of object created in Smurf DB:
 ```js
 [
   {
-    name: 'Brainey',
+    name: "Brainey",
     age: 200,
-    height: '5cm',
+    height: "5cm",
     id: 0
   },
   {
-    name: 'Sleepy',
+    name: "Sleepy",
     age: 200,
-    height: '5cm',
+    height: "5cm",
     id: 1
   }
 ];
@@ -173,9 +185,9 @@ Example:
 ```js
 output: [
   {
-    name: 'Sleepy',
+    name: "Sleepy",
     age: 200,
-    height: '5cm',
+    height: "5cm",
     id: 1
   }
 ];
