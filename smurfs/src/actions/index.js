@@ -1,84 +1,53 @@
-/*
-  Be sure to import in all of the action types from `../actions`
-*/
-import {
-  FETCH_SMURFS_START,
-  FETCH_SMURFS_SUCCESS,
-  FETCH_SMURFS_FAILURE,
-  ADD_SMURF_START,
-  ADD_SMURF_SUCCESS,
-  ADD_SMURF_FAILURE
-} from "../actions";
+import axios from "axios";
 
-/*
- Your initial/default state for this project could *Although does not have to* look a lot like this
- {
-   smurfs: [],
-   fetchingSmurfs: false
-   addingSmurf: false
-   updatingSmurf: false
-   deletingSmurf: false
-   error: null
- }
+export const FETCH_SMURFS_START = "FETCH_SMURFS_START";
+export const FETCH_SMURFS_SUCCESS = "FETCH_SMURFS_SUCCESS";
+export const FETCH_SMURFS_FAILURE = "FETCH_SMURFS_FAILURE";
+
+export const ADD_SMURF_START = "ADD_SMURF_START";
+export const ADD_SMURF_SUCCESS = "ADD_SMURF_SUCCESS";
+export const ADD_SMURF_FAILURE = "ADD_SMURF_FAILURE";
+
+/* 
+  Action Types Go Here!
+  Be sure to export each action type so you can pull it into your reducer
 */
-const initialState = {
-  smurfs: [],
-  fetchingSmurfs: false,
-  addingSmurf: false,
-  updatingSmurf: false,
-  deletingSmurf: false,
-  error: null
+export const getSmurfs = () => dispatch => {
+  dispatch({ type: FETCH_SMURFS_START });
+  axios.get("http://localhost:3333/smurfs").then(res => {
+    console.log(res);
+    dispatch({
+      type: FETCH_SMURFS_SUCCESS,
+      payload: res.data
+    }).catch(err =>
+      dispatch({
+        type: FETCH_SMURFS_FAILURE,
+        payload: err
+      })
+    );
+  });
 };
 
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case FETCH_SMURFS_START:
-      return {
-        ...state,
-        fetchingSmurfs: true
-      };
-    case FETCH_SMURFS_SUCCESS:
-      return {
-        ...state,
-        error: null,
-        fetchingSmurfs: false,
-        smurfs: action.payload
-      };
-    case FETCH_SMURFS_FAILURE:
-      return {
-        ...state,
-        fetchingSmurfs: false,
-        error: action.payload
-      };
-    case ADD_SMURF_START:
-      return {
-        ...state,
-        fetchingSmurfs: true
-      };
-    case ADD_SMURF_SUCCESS:
-      return {
-        ...state,
-        fetchingSmurfs: false,
-        smurfs: action.payload
-      };
-    case ADD_SMURF_FAILURE:
-      return {
-        ...state,
-        fetchingSmurfs: false,
-        error: action.payload
-      };
-
-    default:
-      return state;
-  }
+export const addSmurf = smurf => dispatch => {
+  dispatch({ type: ADD_SMURF_START });
+  axios
+    .post("http://localhost:3333/smurfs", smurf)
+    .then(res => {
+      console.log(res);
+      dispatch({
+        type: ADD_SMURF_SUCCESS,
+        payload: res.data
+      });
+    })
+    .catch(err => dispatch({ type: ADD_SMURF_FAILURE, payload: err }));
 };
-
-export default rootReducer;
-
 /*
-  You'll only need one smurf reducer for this project.
-  Feel free to export it as a default and import as rootReducer. 
-  This will guard your namespacing issues.
-  There is no need for 'combineReducers' in this project.
-  Components can then read your store as, `state` and not `state.fooReducer`.
+  For this project you'll need at least 2 action creators for the main portion,
+   and 2 more for the stretch problem.
+   Be sure to include action types for each type of action creator. Also, be sure to mind
+     the "pending" states like, fetching, creating, updating and deleting.
+   C - addSmurf
+   R - getSmurfs
+   U - updateSmurf
+   D - deleteSmurf
 */
