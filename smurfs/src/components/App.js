@@ -4,6 +4,8 @@ import "./App.css";
 import SmurfList from "./SmurfList";
 import SmurfForm from "./SmurfForm";
 
+import { addSmurf } from "../actions";
+
 import { connect } from "react-redux";
 
 class App extends Component {
@@ -18,7 +20,7 @@ class App extends Component {
           <SmurfList smurfs={this.props.smurfs} />
         </div>
         <div>
-          <SmurfForm />
+          <SmurfForm submit={this.props.addSmurf} />
         </div>
       </div>
     );
@@ -38,5 +40,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {}
+  { addSmurf }
 )(App);
